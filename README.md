@@ -15,8 +15,7 @@ KrishiMitra is an AI-driven agricultural platform designed to assist farmers wit
 - **Backend:** Python (Flask)
 - **Database:** FlaskSQL
 - **APIs:** WeatherMap API, Gemini 2.0 Flash API
-- **Deployment:** Not yet deceided
-
+- **Deployment:** TBD
 ## ⚙️ Installation
 
 1. Clone the repository:
