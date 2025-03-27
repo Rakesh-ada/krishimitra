@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KrishiMitra - Connect directly with farmers across India. Buy and sell agricultural products without middlemen.">
+  <meta name="theme-color" content="#00C853">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>KrishiMitra - Agricultural Marketplace</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/vanilla" class="logo">KrishiMitra</a>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+          <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="sell.html">Sell Products</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="user-actions">
+            <a href="#" class="icon-button" title="Notifications">
+              <i class="fas fa-bell"></i>
+            </a>
+            <a href="dashboard.html" class="icon-button" title="Shopping Cart">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a href="/vanilla/auth" class="btn btn-primary">Sign In</a>
+          </div>
+          <button class="mobile-toggle" id="mobile-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Connect Directly with <span class="accent">Farmers</span> Across India</h1>
+            <p>KrishiMitra helps farmers sell their crops directly to buyers, eliminating middlemen and ensuring fair prices for quality produce.</p>
+            <div class="hero-buttons">
+              <a href="marketplace.html" class="btn btn-primary btn-lg">Explore Products</a>
+              <a href="sell.html" class="btn btn-outline btn-lg">Sell Your Crops</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h2>Why Choose KrishiMitra?</h2>
+            <ul class="benefits-list">
+              <li>
+                <div class="icon-circle"><i class="fas fa-check"></i></div>
+                <p>Direct connection between farmers and buyers</p>
+              </li>
+              <li>
+                <div class="icon-circle"><i class="fas fa-check"></i></div>
+                <p>Better prices without intermediaries</p>
+              </li>
+              <li>
+                <div class="icon-circle"><i class="fas fa-check"></i></div>
+                <p>Quality assurance and transparency</p>
+              </li>
+              <li>
+                <div class="icon-circle"><i class="fas fa-check"></i></div>
+                <p>Support for local farming communities</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Products</h2>
+          <a href="marketplace.html" class="view-all">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+        <div class="product-grid" id="featured-products-grid">
+          <!-- This will be populated with JavaScript -->
+          <div class="product-card">
+            <div class="product-image">
+              <span class="badge new">New</span>
+              <img class="my-products-image" src="shopping.webp" alt="Premium Organic Rice">
+              <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+            </div>
+            <div class="product-details">
+              <div class="product-header">
+                <h3 class="product-title">Premium Organic Rice</h3>
+                <span class="product-price">₹1,800</span>
+              </div>
+              <p class="product-description">Farm-fresh organic rice grown using traditional farming methods. Pesticide-free and high in nutrients.</p>
+              <div class="product-meta">
+                <span class="location">Punjab</span>
+                <span class="quantity">500 kg available</span>
+              </div>
+              <div class="product-footer">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.8</span>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">
+              <span class="badge deal">Deal</span>
+              <img class="my-products-image" src="tomatoes.webp" alt="Fresh Tomatoes">
+              <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+            </div>
+            <div class="product-details">
+              <div class="product-header">
+                <h3 class="product-title">Fresh Tomatoes</h3>
+                <span class="product-price">₹40</span>
+              </div>
+              <p class="product-description">Juicy, ripe tomatoes freshly harvested from our farms. Perfect for salads and cooking.</p>
+              <div class="product-meta">
+                <span class="location">Maharashtra</span>
+                <span class="quantity">200 kg available</span>
+              </div>
+              <div class="product-footer">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.5</span>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">
+              <span class="badge trending">Trending</span>
+              <img class="my-products-image" src="wheat.webp" alt="Organic Wheat">
+              <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+            </div>
+            <div class="product-details">
+              <div class="product-header">
+                <h3 class="product-title">Organic Wheat</h3>
+                <span class="product-price">₹2,200</span>
+              </div>
+              <p class="product-description">Premium quality organic wheat grown without chemicals. High protein content and superior texture.</p>
+              <div class="product-meta">
+                <span class="location">Haryana</span>
+                <span class="quantity">1000 kg available</span>
+              </div>
+              <div class="product-footer">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.9</span>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="product-card">
+            <div class="product-image">
+              <img class="my-products-image" src="potatoes.webp" alt="Fresh Potatoes">
+              <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+            </div>
+            <div class="product-details">
+              <div class="product-header">
+                <h3 class="product-title">Fresh Potatoes</h3>
+                <span class="product-price">₹35</span>
+              </div>
+              <p class="product-description">Farm-fresh potatoes of uniform size. Great for all cooking purposes.</p>
+              <div class="product-meta">
+                <span class="location">Uttar Pradesh</span>
+                <span class="quantity">350 kg available</span>
+              </div>
+              <div class="product-footer">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.6</span>
+                </div>
+                <div class="actions">
+                  <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+      <div class="container">
+        <h2 class="section-title">How KrishiMitra Works</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>For Farmers</h3>
+            <p>Create your account, list your crops with details, set your own prices, and connect directly with buyers.</p>
+            <a href="sell.html" class="btn btn-outline">Start Selling</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>For Buyers</h3>
+            <p>Browse verified farmer listings, compare prices and quality, and purchase directly from the source.</p>
+            <a href="marketplace.html" class="btn btn-outline">Start Buying</a>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-truck"></i>
+            </div>
+            <h3>Logistics</h3>
+            <p>Arrange pickup or delivery, track your orders, and ensure timely and safe transfer of produce.</p>
+            <a href="#" class="btn btn-outline">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weather Widget Section -->
+    <section class="weather-widget-section">
+      <div class="container">
+        <div class="widget-grid">
+          <div class="weather-widget" id="weather-widget">
+            <div class="widget-header">
+              <h3>Today's Weather</h3>
+              <button class="refresh-button" id="refresh-weather"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            <div class="widget-content">
+              <div class="weather-main">
+                <div class="temperature">28°C</div>
+                <div class="weather-meta">
+                  <div class="humidity"><i class="fas fa-tint"></i> Humidity: 65%</div>
+                  <div class="rainfall"><i class="fas fa-cloud-rain"></i> Rainfall: 0 mm</div>
+                </div>
+              </div>
+              <div class="farming-tips">
+                <h4>Farming Tips:</h4>
+                <ul>
+                  <li>Good day for harvesting wheat crops.</li>
+                  <li>Consider irrigation for vegetable fields.</li>
+                  <li>Ideal conditions for applying organic fertilizers.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="market-trends">
+            <h3>Market Trends</h3>
+            <ul class="trend-list">
+              <li>
+                <div class="trend-item">
+                  <span class="crop">Rice</span>
+                  <span class="trend up"><i class="fas fa-arrow-up"></i> 5%</span>
+                </div>
+              </li>
+              <li>
+                <div class="trend-item">
+                  <span class="crop">Wheat</span>
+                  <span class="trend up"><i class="fas fa-arrow-up"></i> 3%</span>
+                </div>
+              </li>
+              <li>
+                <div class="trend-item">
+                  <span class="crop">Tomatoes</span>
+                  <span class="trend down"><i class="fas fa-arrow-down"></i> 2%</span>
+                </div>
+              </li>
+              <li>
+                <div class="trend-item">
+                  <span class="crop">Potatoes</span>
+                  <span class="trend stable"><i class="fas fa-equals"></i> Stable</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to Transform Agriculture?</h2>
+        <p>Join thousands of farmers and buyers across India who are creating a more sustainable and profitable agricultural ecosystem.</p>
+        <div class="cta-buttons">
+          <a href="auth.html" class="btn btn-light btn-lg">Create Account</a>
+          <a href="marketplace.html" class="btn btn-outline-light btn-lg">Browse Marketplace</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>About</h3>
+            <ul>
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Success stories</a></li>
+              <li><a href="#">Our mission</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#">Farmer guides</a></li>
+              <li><a href="#">Market trends</a></li>
+              <li><a href="#">Crop calendar</a></li>
+              <li><a href="#">Knowledge hub</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Seller Agreement</a></li>
+              <li><a href="#">Buyer Agreement</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="newsletter">
+          <h3>Subscribe to our newsletter</h3>
+          <p>Get the latest farming updates, market trends, and exclusive offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2025 KrishiMitra, Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

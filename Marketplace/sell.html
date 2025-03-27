@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KrishiMitra - Sell your agricultural products directly to buyers across India.">
+  <meta name="theme-color" content="#00C853">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Sell Your Products - KrishiMitra</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Additional styles specific to sell page */
+    .sell-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .form-card {
+      background-color: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-xl);
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .form-section {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .form-section-title {
+      font-size: 1.25rem;
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .form-grid {
+      display: grid;
+      gap: var(--spacing-md);
+    }
+    
+    .form-grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .form-grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .form-field {
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+      font-weight: 500;
+      color: var(--text-light);
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      font-family: 'Inter', sans-serif;
+      transition: border-color var(--transition-fast);
+    }
+    
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--accent-green);
+      outline: none;
+    }
+    
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-helper {
+      margin-top: var(--spacing-xs);
+      font-size: 0.75rem;
+      color: var(--text-gray);
+    }
+    
+    .form-group {
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-prefix {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 var(--spacing-md);
+      height: 100%;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-right: none;
+      border-radius: var(--radius-md) 0 0 var(--radius-md);
+      color: var(--text-gray);
+    }
+    
+    .form-group .form-input {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    
+    .image-upload {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-xl);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .image-upload:hover {
+      border-color: var(--accent-green);
+      background-color: rgba(0, 200, 83, 0.05);
+    }
+    
+    .image-upload-icon {
+      font-size: 2rem;
+      color: var(--text-gray);
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .uploaded-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+    
+    .uploaded-image {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    
+    .uploaded-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .uploaded-image .remove-image {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+    
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+    
+    .checkbox-item input[type="checkbox"] {
+      accent-color: var(--accent-green);
+    }
+    
+    .form-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+    
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--spacing-md);
+    }
+    
+    .tip-card {
+      background-color: var(--bg-tertiary);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+    }
+    
+    .tip-card h3 {
+      color: var(--accent-green);
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.125rem;
+    }
+    
+    .tip-card p {
+      color: var(--text-gray);
+      font-size: 0.875rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .form-grid-2,
+      .form-grid-3 {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-buttons {
+        flex-direction: column;
+      }
+      
+      .form-buttons .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html" class="logo">KrishiMitra</a>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="sell.html" class="active">Sell Products</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="user-actions">
+            <a href="#" class="icon-button" title="Notifications">
+              <i class="fas fa-bell"></i>
+            </a>
+            <a href="#" class="icon-button" title="Shopping Cart">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a href="auth.html" class="btn btn-primary">Sign In</a>
+          </div>
+          <button class="mobile-toggle" id="mobile-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="sell-section">
+      <div class="container">
+        <div class="section-header">
+          <h1>Sell Your Agricultural Products</h1>
+          <p class="section-description">List your crops directly to buyers with no middleman - get fair prices for your produce</p>
+        </div>
+        
+        <div class="sell-container">
+          <!-- Product Listing Form -->
+          <form id="product-form" class="product-form">
+            <!-- Basic Information -->
+            <div class="form-card">
+              <h2 class="form-section-title">Basic Information</h2>
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label for="crop-name" class="form-label">Crop Name</label>
+                  <input type="text" id="crop-name" class="form-input" placeholder="e.g. Organic Rice" required>
+                </div>
+                <div class="form-field">
+                  <label for="category" class="form-label">Category</label>
+                  <select id="category" class="form-select" required>
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="grains">Grains</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="spices">Spices</option>
+                    <option value="pulses">Pulses</option>
+                    <option value="seeds">Seeds</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" class="form-textarea" placeholder="Describe your crop, farming methods, quality, etc." required></textarea>
+                <div class="form-helper">Brief description of your crop including quality parameters, harvesting date, etc.</div>
+              </div>
+            </div>
+            
+            <!-- Pricing & Quantity -->
+            <div class="form-card">
+              <h2 class="form-section-title">Pricing & Quantity</h2>
+              <div class="form-grid form-grid-3">
+                <div class="form-field">
+                  <label for="price" class="form-label">Price (₹)</label>
+                  <div class="form-group">
+                    <div class="form-prefix">₹</div>
+                    <input type="number" id="price" class="form-input" placeholder="0.00" min="0" step="0.01" required>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="unit" class="form-label">Unit</label>
+                  <select id="unit" class="form-select" required>
+                    <option value="" disabled selected>Select unit</option>
+                    <option value="per-kg">Per Kg</option>
+                    <option value="per-quintal">Per Quintal</option>
+                    <option value="per-ton">Per Ton</option>
+                    <option value="per-dozen">Per Dozen</option>
+                    <option value="per-piece">Per Piece</option>
+                    <option value="100-pcs">100 pcs</option>
+                    <option value="10kg">10kg</option>
+                    <option value="25kg">25kg</option>
+                    <option value="50kg">50kg</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="quantity" class="form-label">Available Quantity</label>
+                  <input type="number" id="quantity" class="form-input" placeholder="0" min="0" required>
+                </div>
+              </div>
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label for="min-order" class="form-label">Minimum Order Quantity</label>
+                  <input type="number" id="min-order" class="form-input" placeholder="0" min="0">
+                </div>
+                <div class="form-field">
+                  <label for="max-order" class="form-label">Maximum Order Quantity</label>
+                  <input type="number" id="max-order" class="form-input" placeholder="0" min="0">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Location & Images -->
+            <div class="form-card">
+              <h2 class="form-section-title">Location & Images</h2>
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label for="state" class="form-label">State</label>
+                  <select id="state" class="form-select" required>
+                    <option value="" disabled selected>Select state</option>
+                    <option value="maharashtra">Maharashtra</option>
+                    <option value="punjab">Punjab</option>
+                    <option value="haryana">Haryana</option>
+                    <option value="uttar-pradesh">Uttar Pradesh</option>
+                    <option value="karnataka">Karnataka</option>
+                    <option value="gujarat">Gujarat</option>
+                    <option value="rajasthan">Rajasthan</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label for="district" class="form-label">District</label>
+                  <input type="text" id="district" class="form-input" placeholder="District name" required>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label">Crop Images</label>
+                <div class="image-upload" id="image-upload">
+                  <div class="image-upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                  </div>
+                  <p>Drag and drop images here or click to browse</p>
+                  <p class="form-helper">Upload clear photos of your product (max 5 images)</p>
+                  <input type="file" id="image-input" style="display: none;" multiple accept="image/*">
+                </div>
+                <div class="uploaded-images" id="uploaded-images">
+                  <!-- Uploaded images will be displayed here -->
+                </div>
+              </div>
+            </div>
+            
+            <!-- Additional Details -->
+            <div class="form-card">
+              <h2 class="form-section-title">Additional Details</h2>
+              <div class="form-grid form-grid-2">
+                <div class="form-field">
+                  <label for="harvest-date" class="form-label">Harvest Date</label>
+                  <input type="date" id="harvest-date" class="form-input">
+                </div>
+                <div class="form-field">
+                  <label for="certification" class="form-label">Certification</label>
+                  <select id="certification" class="form-select">
+                    <option value="none">None</option>
+                    <option value="organic">Organic Certified</option>
+                    <option value="non-gmo">Non-GMO Verified</option>
+                    <option value="fair-trade">Fair Trade Certified</option>
+                    <option value="pesticide-free">Pesticide-Free</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label class="form-label">Product Tags</label>
+                <input type="text" class="form-input" placeholder="Enter tags separated by commas (e.g. fresh, high-yield, winter)">
+                <div class="form-helper">Tags help buyers find your products more easily</div>
+              </div>
+              <div class="form-field">
+                <div class="checkbox-item">
+                  <input type="checkbox" id="has-delivery" name="has-delivery">
+                  <label for="has-delivery">Delivery Available</label>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Submit Buttons -->
+            <div class="form-buttons">
+              <button type="button" class="btn btn-outline">Save as Draft</button>
+              <button type="submit" class="btn btn-primary">Create Listing</button>
+            </div>
+          </form>
+          
+          <!-- Tips Section -->
+          <div class="form-card">
+            <h2 class="form-section-title">Tips for Successful Listings</h2>
+            <div class="tips-grid">
+              <div class="tip-card">
+                <h3>Quality Description</h3>
+                <p>Be detailed about your product quality, harvesting methods, and any certifications. This builds trust with potential buyers.</p>
+              </div>
+              <div class="tip-card">
+                <h3>Competitive Pricing</h3>
+                <p>Research current market prices before setting your own. Being competitive while still profitable is key to quick sales.</p>
+              </div>
+              <div class="tip-card">
+                <h3>Clear Terms</h3>
+                <p>Specify minimum order quantities, delivery options, and payment terms to avoid misunderstandings later.</p>
+              </div>
+              <div class="tip-card">
+                <h3>Quality Images</h3>
+                <p>Upload clear, well-lit photos of your actual produce. Visual appeal significantly increases buyer interest.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>About</h3>
+            <ul>
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Success stories</a></li>
+              <li><a href="#">Our mission</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#">Farmer guides</a></li>
+              <li><a href="#">Market trends</a></li>
+              <li><a href="#">Crop calendar</a></li>
+              <li><a href="#">Knowledge hub</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Seller Agreement</a></li>
+              <li><a href="#">Buyer Agreement</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="newsletter">
+          <h3>Subscribe to our newsletter</h3>
+          <p>Get the latest farming updates, market trends, and exclusive offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2025 KrishiMitra, Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Additional sell page specific JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+      // Image upload functionality
+      const imageUpload = document.getElementById('image-upload');
+      const imageInput = document.getElementById('image-input');
+      const uploadedImages = document.getElementById('uploaded-images');
+      
+      if (imageUpload && imageInput) {
+        imageUpload.addEventListener('click', function() {
+          imageInput.click();
+        });
+        
+        imageInput.addEventListener('change', function() {
+          const files = this.files;
+          
+          for (let i = 0; i < files.length; i++) {
+            if (uploadedImages.children.length >= 5) {
+              showToast('Maximum 5 images allowed');
+              break;
+            }
+            
+            const file = files[i];
+            
+            // Check if it's an image
+            if (!file.type.match('image.*')) {
+              continue;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+              const imgContainer = document.createElement('div');
+              imgContainer.className = 'uploaded-image';
+              
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              
+              const removeBtn = document.createElement('div');
+              removeBtn.className = 'remove-image';
+              removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+              removeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                imgContainer.remove();
+              });
+              
+              imgContainer.appendChild(img);
+              imgContainer.appendChild(removeBtn);
+              uploadedImages.appendChild(imgContainer);
+            };
+            
+            reader.readAsDataURL(file);
+          }
+        });
+        
+        // Drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+          imageUpload.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+          imageUpload.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+          imageUpload.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+          imageUpload.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+          imageUpload.classList.remove('highlight');
+        }
+        
+        imageUpload.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+          const dt = e.dataTransfer;
+          const files = dt.files;
+          
+          imageInput.files = files;
+          
+          // Trigger change event
+          const event = new Event('change');
+          imageInput.dispatchEvent(event);
+        }
+      }
+      
+      // Form submission
+      const productForm = document.getElementById('product-form');
+      if (productForm) {
+        productForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // In a real application, you would send the form data to the server
+          // For demonstration, we'll just show a success message
+          showToast('Product listing created successfully!');
+          
+          // Redirect to dashboard after a short delay
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 2000);
+        });
+      }
+      
+      // Show toast function
+      function showToast(message) {
+        // Check if a toast container already exists
+        let toastContainer = document.querySelector('.toast-container');
+        
+        // If not, create one
+        if (!toastContainer) {
+          toastContainer = document.createElement('div');
+          toastContainer.className = 'toast-container';
+          document.body.appendChild(toastContainer);
+          
+          // Add styles if not already in the CSS
+          const style = document.createElement('style');
+          style.textContent = `
+            .toast-container {
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              z-index: 9999;
+            }
+            .toast {
+              background-color: var(--bg-tertiary);
+              color: var(--text-white);
+              padding: 12px 20px;
+              border-radius: 4px;
+              margin-top: 10px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+              display: flex;
+              align-items: center;
+              animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+              max-width: 300px;
+            }
+            .toast::before {
+              content: '';
+              width: 4px;
+              height: 100%;
+              background-color: var(--accent-green);
+              position: absolute;
+              left: 0;
+              top: 0;
+              border-radius: 4px 0 0 4px;
+            }
+            @keyframes slideIn {
+              from { transform: translateX(100%); opacity: 0; }
+              to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes fadeOut {
+              from { opacity: 1; }
+              to { opacity: 0; }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+        
+        // Create the toast
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        
+        // Add to container
+        toastContainer.appendChild(toast);
+        
+        // Remove after animation
+        setTimeout(() => {
+          toast.remove();
+        }, 3000);
+      }
+    });
+  </script>
+</body>
+</html>
