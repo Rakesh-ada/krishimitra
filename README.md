@@ -4,6 +4,7 @@ KrishiMitra is an AI-driven agricultural platform designed to assist farmers wit
 
 ## 🚀 Features
 - 🌾 **Crop Recommendations** – AI-powered suggestions for the best crops based on soil, climate, and season.
+- 🧠 **Diseases Prediction** - AI-powered prediction for crops diseases.
 - ☀️ **Weather Forecasting** – Real-time and predictive weather updates to help farmers plan ahead.
 - 🛠 **Farming Best Practices** – Access expert guidance on irrigation, fertilization, and pest control.
 - 📊 **Market Insights** – Get real-time pricing trends and updates on agricultural markets.
@@ -15,7 +16,7 @@ KrishiMitra is an AI-driven agricultural platform designed to assist farmers wit
 - **Backend:** Python (Flask)
 - **Database:** FlaskSQL
 - **APIs:** WeatherMap API, Gemini 2.0 Flash API
-- **Deployment:** TBD
+  
 ## ⚙️ Installation
 
 1. Clone the repository:
