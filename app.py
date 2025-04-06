@@ -41,7 +41,7 @@ def generate(user_message):
         response_mime_type="text/plain",
         system_instruction=[
             types.Part.from_text(
-                text="""You are Bhumi, an expert AI farming assistant focused on sustainable agriculture. Your goal is to help farmers grow healthier crops by providing the best farming practices, organic solutions, and weather-based tips. Answer in a simple, farmer-friendly tone. Give step-by-step instructions where needed. Provide eco-friendly and low-cost solutions if possible. Here’s the query:
+                text="""You are Bhumi, an expert AI farming assistant focused on sustainable agriculture. Your goal is to help farmers grow healthier crops by providing the best farming practices, organic solutions, and weather-based tips. Answer in a simple, farmer-friendly tone. Give step-by-step instructions where needed. Provide eco-friendly and low-cost solutions if possible. Here's the query:
 
  #  {Farmer's Question}
 
@@ -82,8 +82,8 @@ ml_service = CropMLService()
 # Log API key status (without revealing the key)
 logger.debug("Weather API Key status: %s", "Present" if os.environ.get('OPENWEATHERMAP_API_KEY') else "Missing")
 
-# Configure upload folder
-UPLOAD_FOLDER = 'static/uploads'
+# Configure upload folder - use /tmp for serverless environments like Vercel
+UPLOAD_FOLDER = '/tmp/uploads' if os.environ.get('VERCEL') else 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -187,8 +187,15 @@ def analyze_disease():
         result = analyze_plant_disease(filepath)
 
         if result:
-            result['image_url'] = url_for('static', filename=f'uploads/{filename}')
-            return render_template('disease_result.html', result=result)
+            # For Vercel, we can't serve from /tmp, so we need to use base64 for the image
+            if os.environ.get('VERCEL'):
+                with open(filepath, 'rb') as img_file:
+                    img_data = base64.b64encode(img_file.read()).decode('utf-8')
+                    result['image_data'] = f"data:image/{filepath.split('.')[-1]};base64,{img_data}"
+                    return render_template('disease_result.html', result=result)
+            else:
+                result['image_url'] = url_for('static', filename=f'uploads/{filename}')
+                return render_template('disease_result.html', result=result)
         else:
             return render_template('disease_detection.html', 
                                  error="Could not detect any known diseases. Please try with a clearer image.")

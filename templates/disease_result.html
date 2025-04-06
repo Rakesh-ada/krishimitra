@@ -11,7 +11,11 @@
 
     <div class="col-md-6">
         <div class="card mb-4">
+            {% if result.image_url %}
             <img src="{{ result.image_url }}" class="card-img-top" alt="Analyzed plant image">
+            {% elif result.image_data %}
+            <img src="{{ result.image_data }}" class="card-img-top" alt="Analyzed plant image">
+            {% endif %}
             <div class="card-body">
                 <h3 class="card-title">{{ result.disease_name }}</h3>
                 <p class="card-text">Confidence: {{ result.confidence }}</p>
