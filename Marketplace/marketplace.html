@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KrishiMitra Marketplace - Browse agricultural products directly from farmers across India.">
+  <meta name="theme-color" content="#00C853">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Marketplace - KrishiMitra</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Additional styles specific to marketplace page */
+    .marketplace-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: var(--spacing-lg);
+    }
+    
+    .filter-sidebar {
+      background-color: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+    }
+    
+    .filter-section {
+      margin-bottom: var(--spacing-lg);
+    }
+    
+    .filter-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .filter-section h3 {
+      font-size: 1rem;
+      margin-bottom: var(--spacing-md);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .filter-content {
+      margin-top: var(--spacing-sm);
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+    }
+    
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+    
+    .checkbox-item input[type="checkbox"] {
+      accent-color: var(--accent-green);
+    }
+    
+    .price-range {
+      display: flex;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+    }
+    
+    .price-input {
+      flex: 1;
+    }
+    
+    .price-input input {
+      width: 100%;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-tertiary);
+      color: var(--text-white);
+    }
+    
+    .range-slider {
+      margin: var(--spacing-md) 0;
+    }
+    
+    .range-slider input {
+      width: 100%;
+      accent-color: var(--accent-green);
+    }
+    
+    .marketplace-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+    
+    .sorting-options {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+    
+    .sort-select {
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+    }
+    
+    .results-count {
+      font-size: 0.875rem;
+      color: var(--text-gray);
+    }
+    
+    .mobile-filter-toggle {
+      display: none;
+      align-items: center;
+      gap: var(--spacing-sm);
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-white);
+      padding: 8px 12px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--spacing-xl);
+    }
+    
+    .pagination-item {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-tertiary);
+      color: var(--text-gray);
+      margin: 0 4px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    
+    .pagination-item:hover {
+      background-color: var(--border-color);
+      color: var(--text-white);
+    }
+    
+    .pagination-item.active {
+      background-color: var(--accent-green);
+      color: white;
+    }
+    
+    .pagination-item.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    /* Responsive styles for marketplace */
+    @media (max-width: 1024px) {
+      .marketplace-container {
+        grid-template-columns: 250px 1fr;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .marketplace-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .filter-sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        overflow-y: auto;
+        border-radius: 0;
+      }
+      
+      .filter-sidebar.active {
+        display: block;
+      }
+      
+      .mobile-filter-toggle {
+        display: flex;
+      }
+      
+      .filter-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-md);
+      }
+      
+      .close-filters {
+        background: none;
+        border: none;
+        color: var(--text-white);
+        font-size: 1.25rem;
+        cursor: pointer;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html" class="logo">KrishiMitra</a>
+        </div>
+        <div class="navbar-menu" id="mobile-menu">
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="marketplace.html" class="active">Marketplace</a></li>
+            <li><a href="sell.html">Sell Products</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </div>
+          <div class="user-actions">
+            <a href="#" class="icon-button" title="Notifications">
+              <i class="fas fa-bell"></i>
+            </a>
+            <a href="#" class="icon-button" title="Shopping Cart">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+            <a href="auth.html" class="btn btn-primary">Sign In</a>
+          </div>
+          <button class="mobile-toggle" id="mobile-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="marketplace-section">
+      <div class="container">
+        <div class="section-header">
+          <h1>Agricultural Marketplace</h1>
+          <p class="section-description">Eliminate middlemen. Buy & sell fresh farm products directly from farmers</p>
+        </div>
+        
+        <div class="mobile-filter-toggle" id="mobile-filter-toggle">
+          <i class="fas fa-filter"></i> Filters
+        </div>
+        
+        <div class="marketplace-container">
+          <!-- Filter Sidebar -->
+          <div class="filter-sidebar" id="filter-sidebar">
+            <div class="filter-header">
+              <h2>Filters</h2>
+              <div class="filter-actions">
+                <button class="btn btn-outline" id="clear-filters">Clear All</button>
+              </div>
+            </div>
+            
+            
+            
+            <div class="filter-section">
+              <h3>Categories <i class="fas fa-chevron-down"></i></h3>
+              <div class="filter-content">
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-grains">
+                    <label for="category-grains">Grains</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-vegetables">
+                    <label for="category-vegetables">Vegetables</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-fruits">
+                    <label for="category-fruits">Fruits</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-spices">
+                    <label for="category-spices">Spices</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-pulses">
+                    <label for="category-pulses">Pulses</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-seeds">
+                    <label for="category-seeds">Seeds</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-dairy">
+                    <label for="category-dairy">Dairy</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="category-equipment">
+                    <label for="category-equipment">Equipment</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3>Price Range <i class="fas fa-chevron-down"></i></h3>
+              <div class="filter-content">
+                <div class="range-slider">
+                  <input type="range" min="0" max="10000" value="10000" id="price-slider">
+                </div>
+                <div class="price-range">
+                  <div class="price-input">
+                    <label for="min-price" class="text-sm">Min (₹)</label>
+                    <input type="number" id="min-price" value="0" min="0">
+                  </div>
+                  <div class="price-input">
+                    <label for="max-price" class="text-sm">Max (₹)</label>
+                    <input type="number" id="max-price" value="10000" min="0">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3>Location <i class="fas fa-chevron-down"></i></h3>
+              <div class="filter-content">
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-punjab">
+                    <label for="location-punjab">Punjab</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-haryana">
+                    <label for="location-haryana">Haryana</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-maharashtra">
+                    <label for="location-maharashtra">Maharashtra</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-up">
+                    <label for="location-up">Uttar Pradesh</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-karnataka">
+                    <label for="location-karnataka">Karnataka</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-gujarat">
+                    <label for="location-gujarat">Gujarat</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="location-rajasthan">
+                    <label for="location-rajasthan">Rajasthan</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3>Product Type <i class="fas fa-chevron-down"></i></h3>
+              <div class="filter-content">
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="type-organic">
+                    <label for="type-organic">Organic</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="type-non-gmo">
+                    <label for="type-non-gmo">Non-GMO</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="type-conventional">
+                    <label for="type-conventional">Conventional</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="type-fair-trade">
+                    <label for="type-fair-trade">Fair Trade</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="filter-section">
+              <h3>Availability <i class="fas fa-chevron-down"></i></h3>
+              <div class="filter-content">
+                <div class="checkbox-group">
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="availability-instock">
+                    <label for="availability-instock">In Stock</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="availability-preorder">
+                    <label for="availability-preorder">Pre-order</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" id="availability-seasonal">
+                    <label for="availability-seasonal">Seasonal</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn btn-primary" id="apply-filters" style="width: 100%; margin-top: var(--spacing-lg);">
+              Apply Filters
+            </button>
+          </div>
+          
+          <!-- Main Content -->
+          <div class="marketplace-content">
+            <div class="marketplace-controls">
+              <div class="results-count">Showing 24 products</div>
+              <div class="sorting-options">
+                <label for="sort-by">Sort by:</label>
+                <select id="sort-by" class="sort-select">
+                  <option value="featured">Featured</option>
+                  <option value="price-low">Price: Low to High</option>
+                  <option value="price-high">Price: High to Low</option>
+                  <option value="newest">Newest first</option>
+                  <option value="rating">Highest rated</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="product-grid" id="marketplace-grid">
+              <!-- Product 1 -->
+              <div class="product-card" data-category="grains" data-price="1800" data-location="punjab">
+                <div class="product-image">
+                  <span class="badge new">New</span>
+                  <img class="my-products-image" src="shopping.webp" alt="Premium Organic Rice">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Premium Organic Rice</h3>
+                    <span class="product-price">₹1,800</span>
+                  </div>
+                  <p class="product-description">Farm-fresh organic rice grown using traditional farming methods. Pesticide-free and high in nutrients.</p>
+                  <div class="product-meta">
+                    <span class="location">Punjab</span>
+                    <span class="quantity">500 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.8</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Product 2 -->
+              <div class="product-card" data-category="vegetables" data-price="40" data-location="maharashtra">
+                <div class="product-image">
+                  <span class="badge deal">Deal</span>
+                  <img class="my-products-image" src="tomatoes.webp" alt="Fresh Tomatoes">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Fresh Tomatoes</h3>
+                    <span class="product-price">₹40</span>
+                  </div>
+                  <p class="product-description">Juicy, ripe tomatoes freshly harvested from our farms. Perfect for salads and cooking.</p>
+                  <div class="product-meta">
+                    <span class="location">Maharashtra</span>
+                    <span class="quantity">200 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.5</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Product 3 -->
+              <div class="product-card" data-category="grains" data-price="2200" data-location="haryana">
+                <div class="product-image">
+                  <span class="badge trending">Trending</span>
+                  <img class="my-products-image" src="wheat.webp" alt="Organic Wheat">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Organic Wheat</h3>
+                    <span class="product-price">₹2,200</span>
+                  </div>
+                  <p class="product-description">Premium quality organic wheat grown without chemicals. High protein content and superior texture.</p>
+                  <div class="product-meta">
+                    <span class="location">Haryana</span>
+                    <span class="quantity">1000 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.9</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Product 4 -->
+              <div class="product-card" data-category="vegetables" data-price="35" data-location="uttar-pradesh">
+                <div class="product-image">
+                  <img class="my-products-image" src="potatoes.webp" alt="Fresh Potatoes">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Fresh Potatoes</h3>
+                    <span class="product-price">₹35</span>
+                  </div>
+                  <p class="product-description">Farm-fresh potatoes of uniform size. Great for all cooking purposes.</p>
+                  <div class="product-meta">
+                    <span class="location">Uttar Pradesh</span>
+                    <span class="quantity">350 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.6</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Product 5 -->
+              <div class="product-card" data-category="fruits" data-price="80" data-location="karnataka">
+                <div class="product-image">
+                  <img class="my-products-image" src="mangoes.webp" alt="Alphonso Mangoes">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Alphonso Mangoes</h3>
+                    <span class="product-price">₹80</span>
+                  </div>
+                  <p class="product-description">Premium Alphonso mangoes known for their sweetness and rich flavor. Organically grown.</p>
+                  <div class="product-meta">
+                    <span class="location">Karnataka</span>
+                    <span class="quantity">100 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.9</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Product 6 -->
+              <div class="product-card" data-category="spices" data-price="550" data-location="gujarat">
+                <div class="product-image">
+                  <img class="my-products-image" src="turmeric.jpg" alt="Organic Turmeric Powder">
+                  <button class="favorite-button"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="product-details">
+                  <div class="product-header">
+                    <h3 class="product-title">Organic Turmeric Powder</h3>
+                    <span class="product-price">₹550</span>
+                  </div>
+                  <p class="product-description">100% organic turmeric powder with high curcumin content. Freshly ground from farm-grown turmeric.</p>
+                  <div class="product-meta">
+                    <span class="location">Gujarat</span>
+                    <span class="quantity">50 kg available</span>
+                  </div>
+                  <div class="product-footer">
+                    <div class="rating">
+                      <i class="fas fa-star"></i>
+                      <span>4.7</span>
+                    </div>
+                    <div class="actions">
+                      <button class="btn btn-icon btn-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- More products (could be added) -->
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+              <a href="#" class="pagination-item disabled"><i class="fas fa-chevron-left"></i></a>
+              <a href="#" class="pagination-item active">1</a>
+              <a href="#" class="pagination-item">2</a>
+              <a href="#" class="pagination-item">3</a>
+              <a href="#" class="pagination-item">4</a>
+              <a href="#" class="pagination-item"><i class="fas fa-chevron-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>About</h3>
+            <ul>
+              <li><a href="#">How it works</a></li>
+              <li><a href="#">Success stories</a></li>
+              <li><a href="#">Our mission</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="#">Farmer guides</a></li>
+              <li><a href="#">Market trends</a></li>
+              <li><a href="#">Crop calendar</a></li>
+              <li><a href="#">Knowledge hub</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3>Legal</h3>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Seller Agreement</a></li>
+              <li><a href="#">Buyer Agreement</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="newsletter">
+          <h3>Subscribe to our newsletter</h3>
+          <p>Get the latest farming updates, market trends, and exclusive offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2025 KrishiMitra, Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Additional marketplace specific JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile filter toggle
+      const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
+      const filterSidebar = document.getElementById('filter-sidebar');
+      const closeFilters = document.getElementById('close-filters');
+      
+      if (mobileFilterToggle && filterSidebar) {
+        mobileFilterToggle.addEventListener('click', function() {
+          filterSidebar.classList.add('active');
+        });
+      }
+      
+      if (closeFilters && filterSidebar) {
+        closeFilters.addEventListener('click', function() {
+          filterSidebar.classList.remove('active');
+        });
+      }
+      
+      // Filter accordion
+      const filterSections = document.querySelectorAll('.filter-section h3');
+      filterSections.forEach(section => {
+        section.addEventListener('click', function() {
+          const content = this.nextElementSibling;
+          const icon = this.querySelector('i');
+          
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+          } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+          }
+        });
+      });
+      
+      // Price range slider
+      const priceSlider = document.getElementById('price-slider');
+      const minPriceInput = document.getElementById('min-price');
+      const maxPriceInput = document.getElementById('max-price');
+      
+      if (priceSlider && minPriceInput && maxPriceInput) {
+        priceSlider.addEventListener('input', function() {
+          maxPriceInput.value = this.value;
+        });
+        
+        minPriceInput.addEventListener('change', function() {
+          const min = parseInt(this.value) || 0;
+          const max = parseInt(maxPriceInput.value) || 10000;
+          
+          if (min > max) {
+            this.value = max;
+          }
+        });
+        
+        maxPriceInput.addEventListener('change', function() {
+          const min = parseInt(minPriceInput.value) || 0;
+          const max = parseInt(this.value) || 10000;
+          
+          if (max < min) {
+            this.value = min;
+          }
+          
+          priceSlider.value = max;
+        });
+      }
+      
+      // Clear filters
+      const clearFiltersBtn = document.getElementById('clear-filters');
+      if (clearFiltersBtn) {
+        clearFiltersBtn.addEventListener('click', function() {
+          const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          
+          if (minPriceInput && maxPriceInput && priceSlider) {
+            minPriceInput.value = 0;
+            maxPriceInput.value = 10000;
+            priceSlider.value = 10000;
+          }
+        });
+      }
+      
+      // Sort products
+      const sortSelect = document.getElementById('sort-by');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+          const value = this.value;
+          const productGrid = document.getElementById('marketplace-grid');
+          const productCards = Array.from(document.querySelectorAll('.product-card'));
+          
+          productCards.sort((a, b) => {
+            switch(value) {
+              case 'price-low':
+                return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+              case 'price-high':
+                return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+              case 'newest':
+                // In a real app, you'd have a date attribute to sort by
+                return 0;
+              case 'rating':
+                const ratingA = parseFloat(a.querySelector('.rating span').textContent);
+                const ratingB = parseFloat(b.querySelector('.rating span').textContent);
+                return ratingB - ratingA;
+              default:
+                return 0;
+            }
+          });
+          
+          // Remove all existing cards
+          productCards.forEach(card => card.remove());
+          
+          // Add sorted cards back
+          productCards.forEach(card => productGrid.appendChild(card));
+        });
+      }
+    });
+  </script>
+</body>
+</html>
